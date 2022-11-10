@@ -1,0 +1,33 @@
+﻿#Memory
+add-migration "2022-02-10" -Context MemoryContext -OutputDir Migrations\Memory
+
+remove-migration -Context MemoryContext
+
+drop-database -contex MemoryContext
+
+#SqlServer
+add-migration "2022-10-13" -Context SqlServerContext -OutputDir Migrations\SqlServer -Project "Ntmng.DataService"
+
+remove-migration -Context SqlServerContext
+
+drop-database -contex SqlServerContext
+
+Update-Database  -contex SqlServerContext -Project "Ntmng.DataService"
+
+#Sqlite
+add-migration "2022-10-09" -Context SqliteContext -OutputDir Migrations\Sqlite -Project Ntmng.DataService -Project Ntmng.DataService
+dotnet ef migrations add "2022-10-09" --context SqliteContext --output-dir  Migrations/Sqlite --project Ntmng.DataService
+
+dotnet ef migrations add "2022-10-09" --context SqliteContext --output-dir  Migrations\Sqlite --project Ntmng.DataService
+dotnet ef database update --context SqliteContext --project Ntmng.DataService
+
+remove-migration -Context SqliteContext
+
+drop-database -contex SqliteContext
+
+#PostgreSql
+add-migration "2022-02-10" -Context PostgreSqlContext -OutputDir Migrations\PostgreSql
+
+remove-migration -Context PostgreSqlContext
+
+drop-database -contex PostgreSqlContext
