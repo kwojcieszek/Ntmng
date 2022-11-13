@@ -9,9 +9,9 @@ public static class JwtExtensions
         if (configuration == null)
             throw new ArgumentNullException(nameof(configuration));
 
-        Authentication.JwtValidIssuer = configuration["JWT:ValidIssuer"];
-        Authentication.JwtValidAudience = configuration["JWT:ValidAudience"];
-        Authentication.JwtSecret = configuration["JWT:Secret"];
+        Authentication.JwtValidIssuer = configuration["JWT:ValidIssuer"]!;
+        Authentication.JwtValidAudience = configuration["JWT:ValidAudience"]!;
+        Authentication.JwtSecret = configuration["JWT:Secret"]!;
 
         return app;
     }

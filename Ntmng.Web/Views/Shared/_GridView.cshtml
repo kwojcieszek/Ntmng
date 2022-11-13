@@ -1,0 +1,123 @@
+﻿@using Ntmng.Web.Common
+
+@{
+    var pages = Model.GridView.QuantityRows / Model.GridView.RowsOnPage;
+
+    if (Model.GridView.QuantityRows % Model.GridView.RowsOnPage > 0)
+        pages++;
+}
+
+<script type="text/javascript">
+
+    var paginationOffset = 0;
+
+    function LoadGrid(limit, offset, pages) {
+
+        $.ajax({
+            type: "POST",
+            url: "/Products/GridView?limit=" + limit + "&offset=" + offset,
+            success: function (response) {
+                $("#gridview").html(response);
+            }
+        });
+
+        paginationOffset = (offset / limit);;
+
+        ShowPage(paginationOffset,pages);
+    };
+
+    function LoadGridDown(limit, pages) {
+
+        if (paginationOffset > 0)
+            paginationOffset--;
+
+        $.ajax({
+            type: "POST",
+            url: "/Products/GridView?limit=" + limit + "&offset=" + (paginationOffset * limit),
+            success: function (response) {
+                $("#gridview").html(response);
+            }
+        });
+
+        ShowPage(paginationOffset,pages);
+    };
+
+    function LoadGridUp(limit, pages) {
+
+        if (paginationOffset == pages - 1)
+            return;
+
+        paginationOffset++;
+
+        $.ajax({
+            type: "POST",
+            url: "/Products/GridView?limit=" + limit + "&offset=" + (paginationOffset * limit),
+            success: function (response) {
+                $("#gridview").html(response);
+            }
+        });
+
+        ShowPage(paginationOffset,pages);
+    };
+
+    function ShowPage(page,pages) {
+        document.getElementById("gridpagination").innerText =  (page + 1) + "/" + pages;
+    };
+
+    window.onload = (event) => {
+        @Html.Raw($"LoadGrid({Model.GridView.RowsOnPage}, 0,{pages});")
+     };
+
+</script>
+
+<ul class="pagination">
+
+    @for (int i = 0; i < pages; i++)
+    {
+        @if (i > Model.GridView.MaxPagination - 2)
+        {
+            i = pages - 1;
+        }
+
+        if (i == pages - 1)
+        {
+            <li class="page-item">
+                <a class="page-link">
+                    @Html.Raw("...")
+                </a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" href=@Html.Raw($"\"javascript:LoadGrid({Model.GridView.RowsOnPage},{i * Model.GridView.RowsOnPage},{pages})\"")>
+                    @Html.Raw($"{pages}")
+                </a>
+            </li>
+
+            <li class="page-item" id="gridpaginationdown">
+                <a class="page-link" href=@Html.Raw($"\"javascript:LoadGridDown({Model.GridView.RowsOnPage},{pages})\"")>
+                    @Html.Raw($"<")
+                </a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" id="gridpagination">
+                    @Html.Raw($"{Model.GridView.MaxPagination}")
+                </a>
+            </li>
+
+            <li class="page-item" id="gridpaginationup">
+                <a class="page-link" href=@Html.Raw($"\"javascript:LoadGridUp({Model.GridView.RowsOnPage},{pages})\"")>
+                    @Html.Raw($">")
+                </a>
+            </li>
+
+            break;
+        }
+
+        <li class="page-item">
+            <a class="page-link" href=@Html.Raw($"\"javascript:LoadGrid({Model.GridView.RowsOnPage},{i * Model.GridView.RowsOnPage},{pages})\"")>
+                @Html.Raw($"{i + 1}")
+            </a>
+        </li>
+    }
+</ul>

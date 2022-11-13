@@ -27,8 +27,8 @@ public static class InitData
 
         for (int i = 1; i < 10000; i++)
         {
-            var product = new Product() { Code = $"Code{i}", Name = $"name{i}", Index = $"Index{i}", DateAdded = DateTime.Now };
-            db.Products.Add(product);
+            //var product = new Product() { Code = $"Code{i}", Name = $"name{i}", Index = $"Index{i}", DateAdded = DateTime.Now };
+            //db.Products.Add(product);
         }
 
         db.SaveChanges();

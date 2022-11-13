@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Ntmng.DataService;
-using Ntmng.DataService;
+﻿using Ntmng.DataService;
 
 namespace Ntmng.Api.Common;
 
@@ -16,7 +14,7 @@ public static class DatabaseExtensions
         var connectionString = configuration["DatabaseSettings:ConnectionStrings"];
         var databaseType = configuration.GetValue<DatabaseTypes>("DatabaseSettings:DatabaseType");
 
-        Database.DatabaseSettings = new DatabaseSettings(databaseType, connectionString);
+        Database.DatabaseSettings = new DatabaseSettings(databaseType, connectionString!);
 
         return app;
     }

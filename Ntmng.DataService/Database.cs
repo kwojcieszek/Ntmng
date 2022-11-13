@@ -7,14 +7,9 @@ public class Database : DbContext
 {
     #region Tables
 
-    public DbSet<Brand> Brands { get; set; }
-    public DbSet<Category> Categories { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<Language> Languages { get; set; }
-    public DbSet<ListPrice> ListPrices { get; set; }
-    public DbSet<Product> Products { get; set; }
     public DbSet<Roles> Roles { get; set; }
-    public DbSet<Shop> Shops { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
     

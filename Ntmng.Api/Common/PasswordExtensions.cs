@@ -15,7 +15,7 @@ public static class PasswordExtensions
 
         var saltString = configuration["Password:Salt"];
         
-        var salt = Encoding.GetEncoding("UTF-8").GetBytes(saltString.ToCharArray());
+        var salt = Encoding.GetEncoding("UTF-8").GetBytes(saltString!.ToCharArray());
       
         PasswordSha256.Salt = salt;
       

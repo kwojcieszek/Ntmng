@@ -1,0 +1,48 @@
+﻿@using Ntmng.Web.Common
+@model LoginViewModel
+
+<div class="d-flex align-items-center">
+    <div class="row d-flex justify-content-center align-items-center h-50">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                 class="img-fluid" alt="Sample image">
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            @using (Html.BeginForm("LoginAccept", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+                <div class="divider d-flex align-items-center my-4">
+                    <p class="text-center fw-bold mx-3 mb-0">@Localization.GetTranslation(User.GetLanguageCode()).Singin</p>
+                </div>
+                <!-- Email input -->
+                <div class="mb-4">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg", @placeholder=@Localization.GetTranslation(User.GetLanguageCode()).EnterAValidEmailAddress })
+                </div>
+
+                <!-- Password input -->
+                <div class="mb-3">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-lg", @placeholder=@Localization.GetTranslation(User.GetLanguageCode()).EnterPassword })
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Checkbox -->
+                    <div class="form-check mb-0">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        <label class="form-check-label">
+                            @Localization.GetTranslation(User.GetLanguageCode()).RememeberMe
+                        </label>
+                    </div>
+                    <a href="#!" class="text-body">Forgot password?</a>
+                </div>
+
+                <div class="text-center text-lg-start mt-4 pt-2">
+                    <input type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" value=@Localization.GetTranslation(User.GetLanguageCode()).Login />
+                    <p class="small fw-bold mt-2 pt-1 mb-0">
+                        @Localization.GetTranslation(User.GetLanguageCode()).DontHaveAnAccount
+                        <a href="#!" class="link-danger">@Localization.GetTranslation(User.GetLanguageCode()).Register</a>
+                    </p>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

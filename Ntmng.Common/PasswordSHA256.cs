@@ -4,7 +4,7 @@ namespace Ntmng.Common;
 
 public class PasswordSha256 : IPasswordService
 {
-    public static byte[] Salt { get; set; }
+    public static byte[] Salt { get; set; } = { 0x0 };
 
     public string HashPassword(string password)
     {

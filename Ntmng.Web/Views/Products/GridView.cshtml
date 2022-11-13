@@ -1,0 +1,35 @@
+﻿@model ProductsModel
+
+<table class="table table-hover table-sm">
+    <thead>
+    <tr>
+        <th>Kod</th>
+        <th>Indeks</th>
+        <th>Nazwa</th>
+        <th>Data dodania</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    @{
+        System.Diagnostics.Debug.Assert(Model.Products != null, "Model.Products != null");
+    }
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            <td>
+                
+            </td>
+            <td>
+        
+            </td>
+            <td>
+     
+            </td>
+            <td>
+      
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

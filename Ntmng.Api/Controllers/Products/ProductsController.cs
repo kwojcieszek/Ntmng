@@ -21,14 +21,14 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet(Name = "GetProducts")]
-    public IEnumerable<Product> Get(int limit = int.MaxValue, int offset = 0)
+    public IEnumerable<string> Get(int limit = int.MaxValue, int offset = 0)
     {
-        return new Database().Products.Skip(offset).Take(limit);
+        return null; // new Database().Products.Skip(offset).Take(limit);
     }
 
     [HttpGet("Count", Name = "GetCount")]
     public int Count()
     {
-        return new Database().Products.Count();
+        return 0; // new Database().Products.Count();
     }
 }
