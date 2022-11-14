@@ -1,10 +1,4 @@
-﻿using System.Net;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Ntmng.Model.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using Ntmng.Web.Common;
 using Ntmng.Web.Models;
 

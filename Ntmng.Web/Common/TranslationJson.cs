@@ -11,7 +11,7 @@ public static class TranslationJson
         return JsonConvert.DeserializeObject<Translation>(json);
     }
 
-    public static void FlushTranslation(Translation translation,string path)
+    public static void FlushTranslation(Translation translation, string path)
     {
         var json = JsonConvert.SerializeObject(translation);
 

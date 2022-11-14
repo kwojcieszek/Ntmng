@@ -12,78 +12,18 @@ using Ntmng.DataService;
 namespace Ntmng.DataService.Migrations.SqlServer
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20221014072140_2022-10-13")]
-    partial class _20221013
+    [Migration("20221114134331_2022-11-14")]
+    partial class _20221114
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Ntmng.Model.Models.Brand", b =>
-                {
-                    b.Property<int>("BrandId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandId"), 1L, 1);
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Origin")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BrandId");
-
-                    b.ToTable("Brands");
-                });
-
-            modelBuilder.Entity("Ntmng.Model.Models.Category", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int?>("ParentCategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryId");
-
-                    b.HasIndex("ParentCategoryId");
-
-                    b.ToTable("Categories");
-                });
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Ntmng.Model.Models.Country", b =>
                 {
@@ -91,7 +31,7 @@ namespace Ntmng.DataService.Migrations.SqlServer
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryId"));
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -109,13 +49,55 @@ namespace Ntmng.DataService.Migrations.SqlServer
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("Ntmng.Model.Models.Device", b =>
+                {
+                    b.Property<int>("DeviceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeviceId"));
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Host")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LocalizationId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DeviceId");
+
+                    b.HasIndex("LocalizationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Devices");
+                });
+
             modelBuilder.Entity("Ntmng.Model.Models.Language", b =>
                 {
                     b.Property<int>("LanguageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LanguageId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LanguageId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -126,49 +108,16 @@ namespace Ntmng.DataService.Migrations.SqlServer
                     b.ToTable("Languages");
                 });
 
-            modelBuilder.Entity("Ntmng.Model.Models.ListPrice", b =>
+            modelBuilder.Entity("Ntmng.Model.Models.Localization", b =>
                 {
-                    b.Property<int>("PriceId")
+                    b.Property<int>("LocalizationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PriceId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocalizationId"));
 
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
-
-                    b.Property<int>("ShopId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PriceId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ShopId");
-
-                    b.ToTable("ListPrices");
-                });
-
-            modelBuilder.Entity("Ntmng.Model.Models.Product", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
@@ -177,26 +126,102 @@ namespace Ntmng.DataService.Migrations.SqlServer
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ean13")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Index")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.HasKey("ProductId");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("CategoryId");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
-                    b.ToTable("Products");
+                    b.HasKey("LocalizationId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Localizations");
+
+                    b.HasData(
+                        new
+                        {
+                            LocalizationId = 1,
+                            DateAdded = new DateTime(2022, 11, 14, 14, 43, 31, 321, DateTimeKind.Local).AddTicks(4798),
+                            Description = "Default localization.",
+                            IsActive = true,
+                            Name = "Default"
+                        });
+                });
+
+            modelBuilder.Entity("Ntmng.Model.Models.Module", b =>
+                {
+                    b.Property<int>("ModuleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModuleId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ModuleId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Modules");
+
+                    b.HasData(
+                        new
+                        {
+                            ModuleId = 1,
+                            Description = "Network ping monitoring.",
+                            IsActive = true,
+                            Name = "Ping Monitor"
+                        });
+                });
+
+            modelBuilder.Entity("Ntmng.Model.Models.ModuleData", b =>
+                {
+                    b.Property<int>("ModuleDataId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModuleDataId"));
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("ResponseResult")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ResponseTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ModuleDataId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ModulesData");
                 });
 
             modelBuilder.Entity("Ntmng.Model.Models.Role", b =>
@@ -205,7 +230,7 @@ namespace Ntmng.DataService.Migrations.SqlServer
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -223,50 +248,13 @@ namespace Ntmng.DataService.Migrations.SqlServer
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("Ntmng.Model.Models.Shop", b =>
-                {
-                    b.Property<int>("ShopId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShopId"), 1L, 1);
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("PriceScript")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SearchScript")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Web")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ShopId");
-
-                    b.ToTable("Shops");
-                });
-
             modelBuilder.Entity("Ntmng.Model.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
@@ -303,6 +291,10 @@ namespace Ntmng.DataService.Migrations.SqlServer
                     b.Property<string>("MobilePhone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -327,13 +319,14 @@ namespace Ntmng.DataService.Migrations.SqlServer
                         new
                         {
                             UserId = 1,
-                            DateAdded = new DateTime(2022, 10, 14, 9, 21, 40, 28, DateTimeKind.Local).AddTicks(3016),
+                            DateAdded = new DateTime(2022, 11, 14, 14, 43, 31, 321, DateTimeKind.Local).AddTicks(4719),
                             Email = "kwojcieszek@gmail.com",
                             FirstName = "Kamil",
                             IsActive = false,
                             IsEmailConfirmed = false,
                             LastName = "Wojcieszek",
                             MobilePhone = "602174021",
+                            Name = "Kamil Wojcieszek",
                             Password = "HiP+DbplZA8yEB+dW3tQDw9yoGPtzZymRY8u94L8BOE=",
                             UserName = "admin"
                         });
@@ -345,7 +338,7 @@ namespace Ntmng.DataService.Migrations.SqlServer
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"));
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
@@ -365,46 +358,54 @@ namespace Ntmng.DataService.Migrations.SqlServer
                     b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("Ntmng.Model.Models.Category", b =>
+            modelBuilder.Entity("Ntmng.Model.Models.Device", b =>
                 {
-                    b.HasOne("Ntmng.Model.Models.Category", "ParentCategory")
+                    b.HasOne("Ntmng.Model.Models.Localization", "Localization")
                         .WithMany()
-                        .HasForeignKey("ParentCategoryId");
-
-                    b.Navigation("ParentCategory");
-                });
-
-            modelBuilder.Entity("Ntmng.Model.Models.ListPrice", b =>
-                {
-                    b.HasOne("Ntmng.Model.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("LocalizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ntmng.Model.Models.Shop", "Shop")
+                    b.HasOne("Ntmng.Model.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("ShopId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("Localization");
 
-                    b.Navigation("Shop");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ntmng.Model.Models.Product", b =>
+            modelBuilder.Entity("Ntmng.Model.Models.Localization", b =>
                 {
-                    b.HasOne("Ntmng.Model.Models.Category", "Category")
+                    b.HasOne("Ntmng.Model.Models.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CountryId");
 
-                    b.Navigation("Category");
+                    b.HasOne("Ntmng.Model.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Ntmng.Model.Models.ModuleData", b =>
+                {
+                    b.HasOne("Ntmng.Model.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Ntmng.Model.Models.User", b =>
                 {
-                    b.HasOne("Ntmng.Model.Models.Country", "Countries")
+                    b.HasOne("Ntmng.Model.Models.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
@@ -412,7 +413,7 @@ namespace Ntmng.DataService.Migrations.SqlServer
                         .WithMany()
                         .HasForeignKey("LanguageId");
 
-                    b.Navigation("Countries");
+                    b.Navigation("Country");
 
                     b.Navigation("Language");
                 });

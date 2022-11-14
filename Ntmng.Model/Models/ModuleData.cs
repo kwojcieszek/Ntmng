@@ -3,16 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ntmng.Model.Models;
 
-public class UserRole
+public class ModuleData
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int UserRoleId { get; set; }
+    public int ModuleDataId { get; set; }
+    [Required]
     [ForeignKey("User")]
     public int UserId { get; set; }
     public virtual User User { get; set; }
-    [ForeignKey("Role")]
-    public int RoleId { get; set; }
-    public virtual Role Role { get; set; }
     public DateTime DateAdded { get; set; }
+    [Required]
+    public bool ResponseResult { get; set; }
+    public int? ResponseTime { get; set; }
 }

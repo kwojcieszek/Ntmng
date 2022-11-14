@@ -11,6 +11,7 @@ public static class InitData
             new User
             {
                 UserId = 1,
+                Name = "Kamil Wojcieszek",
                 UserName = "admin",
                 FirstName = "Kamil",
                 LastName = "Wojcieszek",
@@ -19,6 +20,29 @@ public static class InitData
                 Password = "HiP+DbplZA8yEB+dW3tQDw9yoGPtzZymRY8u94L8BOE=",
                 DateAdded = DateTime.Now
             });
+
+        modelBuilder.Entity<Module>().HasData(
+            new Module
+            {
+                ModuleId = 1,
+                Name = "Ping Monitor",
+                Description = "Network ping monitoring.",
+                IsActive = true
+            });
+
+        modelBuilder.Entity<Localization>().HasData(
+            new Localization
+            {
+                LocalizationId = 1,
+                Name = "Default",
+                Description = "Default localization.",
+                IsActive = true,
+                DateAdded = DateTime.Now
+            });
+
+        modelBuilder.Entity<Country>().HasData(
+            Ntmng.Model.Common.Countries.GetListOfCountries());
+
     }
 
     public static void SampleData()

@@ -1,13 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
-using Ntmng.Web.Common;
-using Ntmng.Web.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Ntmng.Model.Models;
 
 namespace Ntmng.Web.Controllers;
 

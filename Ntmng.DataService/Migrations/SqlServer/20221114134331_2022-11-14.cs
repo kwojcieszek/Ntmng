@@ -5,49 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ntmng.DataService.Migrations.SqlServer
 {
-    public partial class _20221013 : Migration
+    /// <inheritdoc />
+    public partial class _20221114 : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Brands",
-                columns: table => new
-                {
-                    BrandId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Origin = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Brands", x => x.BrandId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParentCategoryId = table.Column<int>(type: "int", nullable: true),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
-                    table.ForeignKey(
-                        name: "FK_Categories_Categories_ParentCategoryId",
-                        column: x => x.ParentCategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId");
-                });
-
             migrationBuilder.CreateTable(
                 name: "Countries",
                 columns: table => new
@@ -76,6 +39,21 @@ namespace Ntmng.DataService.Migrations.SqlServer
                 });
 
             migrationBuilder.CreateTable(
+                name: "Modules",
+                columns: table => new
+                {
+                    ModuleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Modules", x => x.ModuleId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -90,56 +68,12 @@ namespace Ntmng.DataService.Migrations.SqlServer
                 });
 
             migrationBuilder.CreateTable(
-                name: "Shops",
-                columns: table => new
-                {
-                    ShopId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Web = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SearchScript = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PriceScript = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shops", x => x.ShopId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Index = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ean13 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    CategoryId = table.Column<int>(type: "int", nullable: true),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.ProductId);
-                    table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -170,30 +104,53 @@ namespace Ntmng.DataService.Migrations.SqlServer
                 });
 
             migrationBuilder.CreateTable(
-                name: "ListPrices",
+                name: "Localizations",
                 columns: table => new
                 {
-                    PriceId = table.Column<int>(type: "int", nullable: false)
+                    LocalizationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ShopId = table.Column<int>(type: "int", nullable: false),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CountryId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ListPrices", x => x.PriceId);
+                    table.PrimaryKey("PK_Localizations", x => x.LocalizationId);
                     table.ForeignKey(
-                        name: "FK_ListPrices_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Localizations_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "CountryId");
                     table.ForeignKey(
-                        name: "FK_ListPrices_Shops_ShopId",
-                        column: x => x.ShopId,
-                        principalTable: "Shops",
-                        principalColumn: "ShopId",
+                        name: "FK_Localizations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModulesData",
+                columns: table => new
+                {
+                    ModuleDataId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ResponseResult = table.Column<bool>(type: "bit", nullable: false),
+                    ResponseTime = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModulesData", x => x.ModuleDataId);
+                    table.ForeignKey(
+                        name: "FK_ModulesData_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -224,15 +181,51 @@ namespace Ntmng.DataService.Migrations.SqlServer
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Devices",
+                columns: table => new
+                {
+                    DeviceId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Host = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LocalizationId = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Devices", x => x.DeviceId);
+                    table.ForeignKey(
+                        name: "FK_Devices_Localizations_LocalizationId",
+                        column: x => x.LocalizationId,
+                        principalTable: "Localizations",
+                        principalColumn: "LocalizationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Devices_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Localizations",
+                columns: new[] { "LocalizationId", "CountryId", "DateAdded", "DateModified", "Description", "IsActive", "Name", "UserId" },
+                values: new object[] { 1, null, new DateTime(2022, 11, 14, 14, 43, 31, 321, DateTimeKind.Local).AddTicks(4798), null, "Default localization.", true, "Default", null });
+
+            migrationBuilder.InsertData(
+                table: "Modules",
+                columns: new[] { "ModuleId", "Description", "IsActive", "Name" },
+                values: new object[] { 1, "Network ping monitoring.", true, "Ping Monitor" });
+
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "CompanyName", "CountryId", "DateAdded", "DateModified", "Email", "FirstName", "IsActive", "IsEmailConfirmed", "LanguageId", "LastName", "MobilePhone", "Password", "UserName" },
-                values: new object[] { 1, null, null, new DateTime(2022, 10, 14, 9, 21, 40, 28, DateTimeKind.Local).AddTicks(3016), null, "kwojcieszek@gmail.com", "Kamil", false, false, null, "Wojcieszek", "602174021", "HiP+DbplZA8yEB+dW3tQDw9yoGPtzZymRY8u94L8BOE=", "admin" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_ParentCategoryId",
-                table: "Categories",
-                column: "ParentCategoryId");
+                columns: new[] { "UserId", "CompanyName", "CountryId", "DateAdded", "DateModified", "Email", "FirstName", "IsActive", "IsEmailConfirmed", "LanguageId", "LastName", "MobilePhone", "Name", "Password", "UserName" },
+                values: new object[] { 1, null, null, new DateTime(2022, 11, 14, 14, 43, 31, 321, DateTimeKind.Local).AddTicks(4719), null, "kwojcieszek@gmail.com", "Kamil", false, false, null, "Wojcieszek", "602174021", "Kamil Wojcieszek", "HiP+DbplZA8yEB+dW3tQDw9yoGPtzZymRY8u94L8BOE=", "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Countries_Name",
@@ -241,19 +234,41 @@ namespace Ntmng.DataService.Migrations.SqlServer
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ListPrices_ProductId",
-                table: "ListPrices",
-                column: "ProductId");
+                name: "IX_Devices_LocalizationId",
+                table: "Devices",
+                column: "LocalizationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ListPrices_ShopId",
-                table: "ListPrices",
-                column: "ShopId");
+                name: "IX_Devices_UserId",
+                table: "Devices",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CategoryId",
-                table: "Products",
-                column: "CategoryId");
+                name: "IX_Localizations_CountryId",
+                table: "Localizations",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Localizations_Name",
+                table: "Localizations",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Localizations_UserId",
+                table: "Localizations",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Modules_Name",
+                table: "Modules",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModulesData_UserId",
+                table: "ModulesData",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roles_Name",
@@ -288,31 +303,29 @@ namespace Ntmng.DataService.Migrations.SqlServer
                 unique: true);
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Brands");
+                name: "Devices");
 
             migrationBuilder.DropTable(
-                name: "ListPrices");
+                name: "Modules");
+
+            migrationBuilder.DropTable(
+                name: "ModulesData");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
 
             migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "Shops");
+                name: "Localizations");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Countries");

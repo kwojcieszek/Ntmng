@@ -3,8 +3,8 @@ using Ntmng.Web.Common;
 
 namespace Ntmng.Web.Models;
 
-public class ProductsModel
+public class CountriesModel
 {
-    public ICollection<string> Products { get; set; }
+    public ICollection<Country> Countries { get; set; }
     public GridViewSettings GridView { get; set; }
 }

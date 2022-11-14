@@ -15,7 +15,7 @@ public class Cookies
 
     public string? Get(string key)
     {
-        var cookieValueFromContext  = _httpContextAccessor.HttpContext?.Request.Cookies["key"];
+        var cookieValueFromContext = _httpContextAccessor.HttpContext?.Request.Cookies["key"];
 
         return _controller.Request.Cookies["Key"];
     }

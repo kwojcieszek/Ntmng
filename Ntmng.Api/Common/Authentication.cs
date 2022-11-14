@@ -1,11 +1,11 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Ntmng.Common;
 using Ntmng.DataService;
 using Ntmng.Model.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace Ntmng.Api.Common;
@@ -19,14 +19,14 @@ public class Authentication
     public static string JwtSecret { get; set; }
     public JwtSecurityToken SecurityToken { get; private set; }
 
-    public Authentication(string userName, string password, IPasswordService passwordService,int expiresMinutes = 1440)
+    public Authentication(string userName, string password, IPasswordService passwordService, int expiresMinutes = 1440)
     {
         _passwordService = passwordService;
 
-        IsAuthenticated = Auth(userName, password,expiresMinutes);
+        IsAuthenticated = Auth(userName, password, expiresMinutes);
     }
 
-    private bool Auth(string userName, string password,int expiresMinutes)
+    private bool Auth(string userName, string password, int expiresMinutes)
     {
         var db = new Database();
 

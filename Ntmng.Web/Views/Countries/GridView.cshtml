@@ -1,0 +1,34 @@
+﻿@model CountriesModel
+
+<table class="table table-hover table-sm">
+    <thead>
+        <tr>
+            <th>Kod</th>
+            <th>Indeks</th>
+            <th>Nazwa</th>
+            <th>Data dodania</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            System.Diagnostics.Debug.Assert(Model.Countries != null, "Model.Countries != null");
+        }
+        @foreach (var item in Model.Countries)
+        {
+            <tr>
+                <td>
+                    @item.CountryId
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Code
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

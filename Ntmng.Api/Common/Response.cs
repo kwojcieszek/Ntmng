@@ -1,6 +1,4 @@
-﻿using Ntmng.Model.Models;
-
-namespace Ntmng.Api.Common;
+﻿namespace Ntmng.Api.Common;
 
 public class Response
 {

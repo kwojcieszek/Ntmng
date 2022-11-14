@@ -8,7 +8,7 @@ public static class DatabaseExtensions
     {
         var configuration = app.ApplicationServices.GetService<IConfiguration>();
 
-        if(configuration == null)
+        if (configuration == null)
             throw new ArgumentNullException(nameof(configuration));
 
         var connectionString = configuration["DatabaseSettings:ConnectionStrings"];

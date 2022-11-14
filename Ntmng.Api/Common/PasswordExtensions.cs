@@ -1,6 +1,5 @@
-﻿using System.Text;
-using Ntmng.Common;
-using Ntmng.DataService;
+﻿using Ntmng.Common;
+using System.Text;
 
 namespace Ntmng.Api.Common;
 
@@ -14,11 +13,9 @@ public static class PasswordExtensions
             throw new ArgumentNullException(nameof(configuration));
 
         var saltString = configuration["Password:Salt"];
-        
-        var salt = Encoding.GetEncoding("UTF-8").GetBytes(saltString!.ToCharArray());
-      
-        PasswordSha256.Salt = salt;
-      
+
+        PasswordSha256.Salt = Encoding.GetEncoding("UTF-8").GetBytes(saltString!.ToCharArray());
+
         return app;
     }
 }

@@ -8,11 +8,15 @@ public class Database : DbContext
     #region Tables
 
     public DbSet<Country> Countries { get; set; }
+    public DbSet<Device> Devices { get; set; }
     public DbSet<Language> Languages { get; set; }
-    public DbSet<Roles> Roles { get; set; }
+    public DbSet<Localization> Localizations { get; set; }
+    public DbSet<Module> Modules { get; set; }
+    public DbSet<ModuleData> ModulesData { get; set; }
+    public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
-    
+
     #endregion
 
     public static DatabaseSettings DatabaseSettings { get; set; }

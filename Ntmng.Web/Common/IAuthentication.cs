@@ -1,9 +1,8 @@
-﻿using System;
-namespace Ntmng.Web.Common;
+﻿namespace Ntmng.Web.Common;
 
 public interface IAuthentication
 {
-    public bool SignIn(HttpContext httpContext,string username, string password);
+    public bool SignIn(HttpContext httpContext, string username, string password);
 
     public void SignOut(HttpContext httpContext, string username);
 

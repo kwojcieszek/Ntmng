@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Ntmng.Api.Common;
-using Ntmng.DataService;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 

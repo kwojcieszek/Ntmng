@@ -2,9 +2,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.SqlTypes;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 
 namespace Ntmng.Model.Models;
 
@@ -14,6 +11,7 @@ public class User
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int UserId { get; set; }
+    public string Name { get; set; }
     [Required]
     [StringLength(255)]
     public string UserName { get; set; }
@@ -29,9 +27,9 @@ public class User
     public bool IsActive { get; set; }
     [DefaultValue("false")]
     public bool IsEmailConfirmed { get; set; }
-    [ForeignKey("Countries")]
+    [ForeignKey("Country")]
     public int? CountryId { get; set; }
-    public virtual Country? Countries { get; set; }
+    public virtual Country? Country { get; set; }
     [ForeignKey("Language")]
     public int? LanguageId { get; set; }
     public virtual Language? Language { get; set; }

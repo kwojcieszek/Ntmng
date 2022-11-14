@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Ntmng.Api.Common;
 using Ntmng.Api.Models;
 using Ntmng.Common;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Ntmng.Api.Controllers;
 
