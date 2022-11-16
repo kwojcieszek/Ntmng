@@ -8,7 +8,7 @@ namespace Ntmng.Web.Controllers;
 
 public class CountriesController : Controller
 {
-    private readonly int _limitRows = 20;
+    private readonly int _limitRows = 15;
     private readonly ILogger<CountriesController> _logger;
 
     public CountriesController(ILogger<CountriesController> logger)
@@ -22,7 +22,16 @@ public class CountriesController : Controller
         var api = new ApiNtmng();
         var qunatity = await api.RestRequestAsync<int>($"countries/count", RestSharp.Method.Get, authenticator: User.GetToken());
 
-        return View(new CountriesModel() { GridView = new GridViewSettings() { QuantityRows = qunatity, RowsOnPage = _limitRows } });
+        return View(new CountriesModel() { GridView = new GridViewSettings() { QuantityRows = qunatity, RowsOnPage = _limitRows, RestApiPath = "countries", GridID = "gridview" } });
+    }
+
+    [Authorize(Roles = "products")]
+    public async Task<PartialViewResult> GridView1(CountriesModel model)
+    {
+        var api = new ApiNtmng();
+        var qunatity = await api.RestRequestAsync<int>($"countries/count", RestSharp.Method.Get, authenticator: User.GetToken());
+
+        return PartialView(new CountriesModel() { GridView = new GridViewSettings() { QuantityRows = qunatity, RowsOnPage = _limitRows, RestApiPath = "countries"} });
     }
 
     public async Task<PartialViewResult> GridView(int limit, int offset = 0)

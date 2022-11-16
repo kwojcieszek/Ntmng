@@ -37,7 +37,7 @@ public class ForgotViewModel
     public string Email { get; set; }
 }
 
-public class LoginViewModel
+public class SignInViewModel
 {
     [Required]
     [Display(Name = "Email")]

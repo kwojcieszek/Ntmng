@@ -18,13 +18,15 @@ public class CountriesController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(Name = "GetCountries")]
+    [ApiVersion("1.0")]
+    [HttpGet]
     public IEnumerable<Country> Get(int limit = int.MaxValue, int offset = 0)
     {
         return new Database().Countries.Skip(offset).Take(limit);
     }
 
-    [HttpGet("Count", Name = "GetCount")]
+    [ApiVersion("1.0")]
+    [HttpGet("Count")]
     public int Count()
     {
         return new Database().Countries.Count();

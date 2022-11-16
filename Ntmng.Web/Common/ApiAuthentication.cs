@@ -10,7 +10,7 @@ public class ApiAuthentication : IAuthentication
     {
         if (httpContext.User.Identity != null && httpContext.User.Identity.IsAuthenticated)
         {
-            var claim = httpContext.User.Claims.Where(c => c.Type == "Token").FirstOrDefault();
+            var claim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "Token");
 
             if (claim != null)
                 return claim.Value;
@@ -52,7 +52,7 @@ public class ApiAuthentication : IAuthentication
 
     public void SignOut(HttpContext httpContext, string username)
     {
-
+      
     }
 
     private authresult? ApiLogIn(string userName, string password)

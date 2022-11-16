@@ -8,7 +8,7 @@ public static class ClaimsPrincipalExtensions
     {
         if (user.Identity != null && user.Identity.IsAuthenticated)
         {
-            var claim = user.Claims.Where(c => c.Type == "Token").FirstOrDefault();
+            var claim = user.Claims.FirstOrDefault(c => c.Type == "Token");
 
             if (claim != null)
                 return claim.Value;
@@ -21,7 +21,7 @@ public static class ClaimsPrincipalExtensions
     {
         if (user.Identity != null && user.Identity.IsAuthenticated)
         {
-            var claim = user.Claims.Where(c => c.Type == "LanguageCode").FirstOrDefault();
+            var claim = user.Claims.FirstOrDefault(c => c.Type == "LanguageCode");
 
             if (claim != null)
                 return claim.Value;

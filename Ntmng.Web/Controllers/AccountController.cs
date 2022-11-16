@@ -15,12 +15,20 @@ public class AccountController : Controller
         _authentication = authentication;
     }
 
-    public IActionResult Login()
+    public IActionResult SignIn()
     {
         return View();
     }
 
-    public IActionResult LoginAccept(LoginViewModel model)
+    public IActionResult SignOutAction()
+    {
+        _authentication.SignOut(this.HttpContext,User.Identity?.Name!);
+
+        return View("SignIn");
+    }
+
+    //SignOutAction
+    public IActionResult SignInAccept(SignInViewModel model)
     {
         _authentication.SignIn(HttpContext, model.Email, model.Password);
 
