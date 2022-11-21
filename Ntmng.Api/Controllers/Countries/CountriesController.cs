@@ -20,14 +20,14 @@ public class CountriesController : ControllerBase
 
     [ApiVersion("1.0")]
     [HttpGet]
-    public IEnumerable<Country> Get(int limit = int.MaxValue, int offset = 0)
+    public IEnumerable<Country> GetCountries(int limit = int.MaxValue, int offset = 0)
     {
         return new Database().Countries.Skip(offset).Take(limit);
     }
 
     [ApiVersion("1.0")]
-    [HttpGet("Count")]
-    public int Count()
+    [HttpGet("quantity")]
+    public int GetQuantity()
     {
         return new Database().Countries.Count();
     }

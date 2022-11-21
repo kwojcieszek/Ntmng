@@ -20,7 +20,7 @@ public class CountriesController : Controller
     public async Task<ViewResult> Index(CountriesModel model)
     {
         var api = new ApiNtmng();
-        var qunatity = await api.RestRequestAsync<int>($"countries/count", RestSharp.Method.Get, authenticator: User.GetToken());
+        var qunatity = await api.RestRequestAsync<int>($"countries/quantity", RestSharp.Method.Get, authenticator: User.GetToken());
 
         return View(new CountriesModel() { GridView = new GridViewSettings() { QuantityRows = qunatity, RowsOnPage = _limitRows, RestApiPath = "countries", GridID = "gridview" } });
     }
@@ -29,7 +29,7 @@ public class CountriesController : Controller
     public async Task<PartialViewResult> GridView1(CountriesModel model)
     {
         var api = new ApiNtmng();
-        var qunatity = await api.RestRequestAsync<int>($"countries/count", RestSharp.Method.Get, authenticator: User.GetToken());
+        var qunatity = await api.RestRequestAsync<int>($"countries/quantity", RestSharp.Method.Get, authenticator: User.GetToken());
 
         return PartialView(new CountriesModel() { GridView = new GridViewSettings() { QuantityRows = qunatity, RowsOnPage = _limitRows, RestApiPath = "countries"} });
     }

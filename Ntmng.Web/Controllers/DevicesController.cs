@@ -20,8 +20,8 @@ public class DevicesController : Controller
     public async Task<ViewResult> Index(DevicesModel model)
     {
         var api = new ApiNtmng();
-        var qunatity = await api.RestRequestAsync<int>($"devices/count", RestSharp.Method.Get, authenticator: User.GetToken());
-
+        var qunatity = await api.RestRequestAsync<int>($"devices/quantity", RestSharp.Method.Get, authenticator: User.GetToken());
+        
         return View(new DevicesModel() { GridView = new GridViewSettings() { QuantityRows = qunatity, RowsOnPage = _limitRows, RestApiPath = "devices", GridID = "gridview" } });
     }
 
@@ -29,7 +29,7 @@ public class DevicesController : Controller
     public async Task<PartialViewResult> GridView1(DevicesModel model)
     {
         var api = new ApiNtmng();
-        var qunatity = await api.RestRequestAsync<int>($"devices/count", RestSharp.Method.Get, authenticator: User.GetToken());
+        var qunatity = await api.RestRequestAsync<int>($"devices/quantity", RestSharp.Method.Get, authenticator: User.GetToken());
 
         return PartialView(new DevicesModel() { GridView = new GridViewSettings() { QuantityRows = qunatity, RowsOnPage = _limitRows, RestApiPath = "devices" } });
     }

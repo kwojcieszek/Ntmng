@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Ntmng.Model.Models;
+using Ntmng.Web.Common;
 using System.Security.Claims;
 
 namespace Ntmng.Web.Common;
@@ -50,17 +53,25 @@ public class ApiAuthentication : IAuthentication
         return true;
     }
 
-    public void SignOut(HttpContext httpContext, string username)
+    public void SignOut(HttpContext httpContext)
     {
-      
+        ApiLogOut(httpContext);
+
+       // httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
-    private authresult? ApiLogIn(string userName, string password)
+    private ApiAuthenticationResult? ApiLogIn(string userName, string password)
     {
         var api = new ApiNtmng();
 
-        return api.RestRequest<authresult>("authenticate/login", RestSharp.Method.Post, new { username = userName, password = password });
+        return api.RestRequest<ApiAuthenticationResult>("authenticate/login", RestSharp.Method.Post, new { username = userName, password = password });
+    }
 
+    private void ApiLogOut(HttpContext httpContext)
+    {
+        var api = new ApiNtmng();
+
+        api.RestRequest<int>("authenticate/revoke-token", RestSharp.Method.Post, authenticator: httpContext.User.GetToken());
     }
 
     private List<Claim> GetClaims(string userName, string token)
@@ -76,16 +87,4 @@ public class ApiAuthentication : IAuthentication
         };
         return claims;
     }
-}
-
-public class auth
-{
-    public string username { get; set; }
-    public string password { get; set; }
-}
-
-public class authresult
-{
-    public string token { get; set; }
-    public DateTime expiration { get; set; }
 }

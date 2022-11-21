@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Ntmng.Api.Common;
 using Ntmng.Api.Models;
 using Ntmng.Common;
@@ -17,13 +19,12 @@ public class AuthenticateController : ControllerBase
         _configuration = configuration;
     }
 
-    [HttpPost]
-    [Route("login")]
+    [HttpPost(template:"login")]
     public Task<IActionResult> Login([FromBody] LoginModel model)
     {
-        var authentication = new Authentication(model.Username, model.Password, new PasswordSha256());
-
-        if (authentication.IsAuthenticated)
+        var authentication = new Authentication(new PasswordSha256());
+        
+        if (authentication.Auth(model.Username, model.Password))
         {
             return Task.FromResult<IActionResult>(Ok(new
             {
@@ -32,5 +33,21 @@ public class AuthenticateController : ControllerBase
             }));
         }
         return Task.FromResult<IActionResult>(Unauthorized());
+    }
+
+    [Authorize]
+    [HttpPost(template: "revoke-token")]
+    public Task<IActionResult> RevokeToken()
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+
+        foreach (var userClaim in this.User.Claims)
+        {
+            
+        }
+        var result = this.SignOut(JwtBearerDefaults.AuthenticationScheme);
+
+        return Task.FromResult<IActionResult>(result);
     }
 }

@@ -21,7 +21,7 @@ public class DevicesController : ControllerBase
 
     [ApiVersion("1.0")]
     [HttpGet]
-    public IEnumerable<Device> Get(int limit = int.MaxValue, int offset = 0)
+    public IEnumerable<Device> GetDevices(int limit = int.MaxValue, int offset = 0)
     {
         var userId = User.UserId();
 
@@ -32,8 +32,8 @@ public class DevicesController : ControllerBase
     }
 
     [ApiVersion("1.0")]
-    [HttpGet("Count")]
-    public int Count()
+    [HttpGet("quantity")]
+    public int GetQuantity()
     {
         var userId = User.UserId();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Ntmng.Common;
 using Ntmng.DataService;
@@ -6,27 +7,25 @@ using Ntmng.Model.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Ntmng.Common.Extensions;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace Ntmng.Api.Common;
 
 public class Authentication
 {
-    private readonly IPasswordService _passwordService;
-    public bool IsAuthenticated { get; private set; }
+    private readonly IPasswordService? _passwordService;
     public static string JwtValidIssuer { get; set; }
     public static string JwtValidAudience { get; set; }
     public static string JwtSecret { get; set; }
     public JwtSecurityToken SecurityToken { get; private set; }
 
-    public Authentication(string userName, string password, IPasswordService passwordService, int expiresMinutes = 1440)
+    public Authentication(IPasswordService? passwordService = null)
     {
         _passwordService = passwordService;
-
-        IsAuthenticated = Auth(userName, password, expiresMinutes);
     }
 
-    private bool Auth(string userName, string password, int expiresMinutes)
+    public bool Auth(string userName, string password, int expiresMinutes = 1440)
     {
         var db = new Database();
 
@@ -34,6 +33,9 @@ public class Authentication
 
         if (user == null)
             return false;
+
+        if (_passwordService == null)
+            throw new NoNullAllowedException("IPasswordService is not acceptable for method Auth");
 
         if (_passwordService.ComparePassword(password, user.Password))
         {
@@ -60,14 +62,30 @@ public class Authentication
             SecurityToken = new JwtSecurityToken(
                 issuer: JwtValidIssuer,
                 audience: JwtValidAudience,
+                notBefore: DateTime.Now,
                 expires: DateTime.Now.AddMinutes(expiresMinutes),
                 claims: claims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 
+            db.Tokens.Add(new Token()
+            {
+                SecretKey = authSigningKey.Key.ToStringFromArrary(),
+                ValidFrom = SecurityToken.ValidFrom,
+                ValidTo = SecurityToken.ValidTo
+            });
+
+            db.SaveChangesAsync();
+
             return true;
         }
 
         return false;
+    }
+
+    public void Revoke()
+    {
+        var securityToken = new JwtSecurityToken();
+
     }
 }

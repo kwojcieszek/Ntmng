@@ -16,6 +16,7 @@ public class Database : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<Token> Tokens { get; set; }
 
     #endregion
 

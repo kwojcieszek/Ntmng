@@ -22,7 +22,7 @@ public class AccountController : Controller
 
     public IActionResult SignOutAction()
     {
-        _authentication.SignOut(this.HttpContext,User.Identity?.Name!);
+        _authentication.SignOut(this.HttpContext);
 
         return View("SignIn");
     }
